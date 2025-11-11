@@ -2,7 +2,9 @@
 
 @theme {
   --color-primary-white: #fafaf5;
-  --color-primary: #49a078;
+  --color-primary-300: #64b891;
+  --color-primary-400: #49a078;
+  --color-primary-500: #397d5e;
   --color-primary-black: #333333;
   --color-primary-gray: #cccccc;
   --color-secondary: #ff7f50;
