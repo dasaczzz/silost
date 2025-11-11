@@ -6,7 +6,7 @@ export const ListaAlmacenes = () => {
 
   const { setAlmacenActual } = useContext(AlmacenActual)
 
-  const { data, loading, error } = useFetch('http://localhost:1880/iot/personal/almacenes');
+  const { data, loading, error } = useFetch('almacenes');
   if (loading) return <div>Cargando...</div>;
 
   if (error) return <div>Error: {error.message}</div>;
