@@ -1,4 +1,4 @@
-import { ListaAlmacenes } from "./ListaAlmacenes"
+import { ListaAlmacenes } from "../ListaAlmacenes"
 
 export const Sidebar = () => {
   return (
