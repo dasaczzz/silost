@@ -1,11 +1,12 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AlmacenActual } from "../context/AlmacenActual";
 
 export const ListaSilos = () => {
 
   const { almacenActual } = useContext(AlmacenActual);
-  const [ silos ] = useState(almacenActual.silos);
-  console.log(silos)
+  const [ silos, setSilos ] = useState(almacenActual.silos);
+  
+  useEffect(() => { setSilos(almacenActual.silos) }, [ almacenActual ])
 
   return (
     <div className="bg-primary-gray flex flex-col gap-9 items-start py-6 px-5 rounded-2xl w-1/4">
