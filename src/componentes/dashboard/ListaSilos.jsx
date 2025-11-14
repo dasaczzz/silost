@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { AlmacenActual } from "../context/AlmacenActual";
+import { AlmacenActual } from "../../context/AlmacenActual";
 
 export const ListaSilos = () => {
 
