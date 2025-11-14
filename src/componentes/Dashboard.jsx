@@ -1,4 +1,4 @@
-import { ListaSilos } from './ListaSilos.jsx'
+import { ListaSilos } from './dashboard/ListaSilos.jsx'
 
 export const Dashboard = () => {
   return (

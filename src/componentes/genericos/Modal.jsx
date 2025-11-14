@@ -1,28 +1,15 @@
-export const Modal = ({ seMuestra, cerrarModal, titulo, subyacente }) => {
-  if (!seMuestra) return null
-
+export const Modal = ({ seMuestra, cerrarModal, titulo, children }) => {
   return (
-    <div 
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80"
-      onClick={cerrarModal}
-    >
-      <div 
-        className="bg-[#1a2936] rounded-2xl shadow-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-[#273b48]"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-3xl font-bold text-white">{titulo}</h2>
-          <button
-            onClick={cerrarModal}
-            className="text-gray-400 hover:text-white text-3xl transition"
-          >
-            &times;
+    <dialog className={`${ seMuestra ? 'flex' : 'hidden'} h-full w-full rounded shadow bg-primary-black/70 justify-center items-center`}>
+      <div className='w-1/3 bg-primary-gray rounded-md px-6 pt-6 pb-12 flex flex-col items-center gap-8'>
+        <div className='flex justify-between w-full'>
+          <h4 className='text-pretty text-4xl font-bold'>{titulo}</h4>
+          <button className='text-red-400' onClick={() => { cerrarModal() }}>
+            <span className="text-4xl font-bold font-mono">x</span>
           </button>
         </div>
-        <div className="flex justify-center">
-          {subyacente}
+        {children}
         </div>
-      </div>
-    </div>
+      </dialog>
   )
 }
