@@ -9,7 +9,7 @@ export const SeccionPrincipal = () => {
   const { almacenActual } = useContext(AlmacenActual)
 
   return (
-    <main className='w-full'>
+    <main className='flex-1 bg-amber-50'>
       {almacenActual ? <Dashboard /> : <Bienvenida /> }
     </main>
   )

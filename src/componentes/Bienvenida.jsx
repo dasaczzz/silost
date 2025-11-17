@@ -2,9 +2,11 @@ import silost from '../../public/silost.svg'
 
 export const Bienvenida = () => {
   return (
-    <div className="flex h-screen items-center w-screen justify-between ">
-      <div className="flex gap-8">        
-        <img src={silost} alt="Silost Logo" className="w-80 h-auto" />
+
+      <div className="flex gap-8 items-center justify-center p-4">        
+        <div className="w-80 h-auto">
+          <img src={silost} alt="Silost Logo"  />
+        </div>
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-1.5">
             <h1 className="text-4xl font-bold text-primary-black">Bienvenido a Silost</h1>
@@ -21,6 +23,6 @@ export const Bienvenida = () => {
           </div>
         </div>
       </div>
-    </div>
+
   )
 }
