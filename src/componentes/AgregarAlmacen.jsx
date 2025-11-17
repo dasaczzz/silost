@@ -1,10 +1,14 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { useForm } from "../hooks/useForm"
 import { Entrada } from "./genericos/Entrada"
+import { useFetch } from "../hooks/useFetch"
+import { AlmacenActual } from "../context/AlmacenActual"
 
 export const AgregarAlmacen = ({cerrarModal}) => {
 
+  const { setAlmacenActual } = useContext(AlmacenActual);
   const [cargando, setCargando] = useState(false)
+  const { post } = useFetch('almacen');
   const {almacen, direccion, latitud, longitud, manejoCambioEntrada, manejoReinicio, errores, manejoSubmit} = useForm({ 
     almacen: '',
     direccion: '',
@@ -16,9 +20,29 @@ export const AgregarAlmacen = ({cerrarModal}) => {
     // usamos manejoSubmit del hook: previene envío si hay campos vacíos
     manejoSubmit(e, async () => {
       setCargando(true)
-      cerrarModal()
-      setCargando(false)
-      manejoReinicio()
+      try {
+        const latitudInt = parseInt(latitud);
+        const longitudInt = parseInt(longitud);
+        const nuevoAlmacen = {
+          nombre: almacen,
+          ubicacion: {
+            direccion,
+            latitud: latitudInt,
+            longitud: longitudInt
+          }
+        };
+
+        const almacenAgregado = await post(nuevoAlmacen);
+        console.log(almacenAgregado);
+
+        setAlmacenActual(almacenAgregado[0]); 
+        cerrarModal();
+        manejoReinicio();
+      } catch (err) {
+        console.error("Error al crear el almacén:", err);
+      } finally {
+        setCargando(false);
+      }
     })
   }
 

@@ -25,5 +25,34 @@ export const useFetch = (resource) => {
     fetchData(resource);
   }, [resource]);
 
-  return { data, loading, error };
+  const post = async (body) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch(`http://localhost:1880/iot/personal/${resource}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+
+      if (!response.ok) {
+        // Si la respuesta no es OK, intentamos leer el cuerpo del error
+        const errorBody = await response.text();
+        throw new Error(`Error ${response.status}: ${errorBody || 'Network response was not ok'}`);
+      }
+
+      const result = await response.json();
+      setData(result); // Opcional: actualiza el estado `data` con la respuesta del POST
+      return result;
+    } catch (err) {
+      setError(err);
+      throw err; // Lanzamos el error para que el componente que llama pueda manejarlo
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { data, loading, error, post};
 };

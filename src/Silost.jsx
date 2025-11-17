@@ -10,7 +10,7 @@ export const Silost = () => {
   return (
     <AlmacenActual.Provider value={{almacenActual, setAlmacenActual}}>
       <Navbar />
-      <div className="flex">  
+      <div className="flex h-screen">  
         <Sidebar />
         <SeccionPrincipal />
       </div>

@@ -3,10 +3,10 @@ import { useFetch } from "../hooks/useFetch";
 import { AlmacenActual } from "../context/AlmacenActual";
 
 export const ListaAlmacenes = () => {
-  
+
   const { setAlmacenActual } = useContext(AlmacenActual)
   const { data: almacenes, loading, error } = useFetch('almacenes');
-  
+
   if (loading) return <div>Cargando...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
@@ -30,6 +30,6 @@ export const ListaAlmacenes = () => {
           {almacen.nombre}
         </li>
       ))}
-    </ul>
+    </ul>      
   )
 }
