@@ -1,12 +1,19 @@
-import { useContext, useMemo } from "react";
+import { useContext, useMemo, useState } from "react";
 import { AlmacenActual } from "../../context/AlmacenActual";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 // Define colors for different silos
 const colors = ['#2563eb', '#16a34a', '#dc2626', '#9333ea', '#ea580c', '#0891b2', '#ca8a04', '#e11d48'];
 
+// Month names in Spanish
+const meses = [
+  'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+  'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+];
+
 export const GraficaPesos = () => {
   const { almacenActual } = useContext(AlmacenActual);
+  const [mesSeleccionado, setMesSeleccionado] = useState('');
 
   // Process data for the chart
   const chartData = useMemo(() => {
@@ -28,6 +35,13 @@ export const GraficaPesos = () => {
         const timestamp = medicion.fecha;
         if (!timestamp) return;
 
+        // Filter by selected month if one is selected
+        if (mesSeleccionado) {
+          const fecha = new Date(timestamp);
+          const mes = fecha.getMonth();
+          if (mes !== parseInt(mesSeleccionado)) return;
+        }
+
         if (!timestampMap.has(timestamp)) {
           timestampMap.set(timestamp, { fecha: timestamp });
         }
@@ -43,7 +57,7 @@ export const GraficaPesos = () => {
     });
 
     return { data: sortedData, silos: siloInfo };
-  }, [almacenActual]);
+  }, [almacenActual, mesSeleccionado]);
 
   if (!almacenActual || !almacenActual.silos || chartData.data.length === 0) {
     return (
@@ -56,7 +70,19 @@ export const GraficaPesos = () => {
 
   return (
     <div className="bg-primary-gray flex flex-col gap-4 py-6 px-5 rounded-2xl flex-1">
-      <h3 className="text-2xl font-semibold text-primary-black">Gráfica de Pesos en el Tiempo</h3>
+      <div className="flex justify-between items-center">
+        <h3 className="text-2xl font-semibold text-primary-black">Gráfica de Pesos en el Tiempo</h3>
+        <select 
+          value={mesSeleccionado} 
+          onChange={(e) => setMesSeleccionado(e.target.value)}
+          className="px-4 py-2 rounded-md border border-gray-300 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-400"
+        >
+          <option value="">Todo el año</option>
+          {meses.map((mes, index) => (
+            <option key={index} value={index}>{mes}</option>
+          ))}
+        </select>
+      </div>
       <ResponsiveContainer width="100%" height={400}>
         <LineChart
           data={chartData.data}

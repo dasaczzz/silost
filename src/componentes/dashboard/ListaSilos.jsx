@@ -4,9 +4,18 @@ import { AlmacenActual } from "../../context/AlmacenActual";
 export const ListaSilos = () => {
 
   const { almacenActual } = useContext(AlmacenActual);
-  const [ silos, setSilos ] = useState(almacenActual.silos);
+  const [ silos, setSilos ] = useState(almacenActual?.silos || []);
   
-  useEffect(() => { setSilos(almacenActual.silos) }, [ almacenActual ])
+  useEffect(() => { setSilos(almacenActual?.silos || []) }, [ almacenActual ])
+
+  if (!silos || silos.length === 0) {
+    return (
+      <div className="bg-primary-gray flex flex-col gap-9 items-center justify-center py-10 px-5 rounded-2xl w-1/4">
+        <h3 className="text-2xl font-semibold text-primary-black">Silos</h3>
+        <p className="text-gray-600 text-center">No hay silos disponibles</p>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-primary-gray flex flex-col gap-9 items-start py-6 px-5 rounded-2xl w-1/4">
