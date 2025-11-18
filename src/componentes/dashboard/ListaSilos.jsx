@@ -10,9 +10,12 @@ export const ListaSilos = () => {
 
   if (!silos || silos.length === 0) {
     return (
-      <div className="bg-primary-gray flex flex-col gap-9 items-center justify-center py-10 px-5 rounded-2xl w-1/4">
+      <div className="bg-primary-gray flex flex-col gap-9  items-center justify-center py-10 px-5 rounded-2xl w-1/3">
         <h3 className="text-2xl font-semibold text-primary-black">Silos</h3>
         <p className="text-gray-600 text-center">No hay silos disponibles</p>
+        <button className="mt-5 rounded-md border border-primary-black bg-primary-white px-5 py-2.5 font-semibold text-primary-black shadow-sm transition hover:border-none hover:ring-2 hover:ring-primary-400 hover:ring-offset-2">
+          CREAR UN SILO
+        </button>
       </div>
     );
   }

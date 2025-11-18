@@ -57,10 +57,10 @@ export const AgregarAlmacen = ({cerrarModal}) => {
               <Entrada texto="Dirección" name="direccion" value={direccion} type="text" onChange={manejoCambioEntrada} error={errores.direccion} />
               <div className="flex gap-3">
                 <div className="flex-1">
-                  <Entrada texto="Latitud" name="latitud" value={latitud} type="text" onChange={manejoCambioEntrada} error={errores.latitud} />
+                  <Entrada texto="Latitud" name="latitud" value={latitud} type="number" onChange={manejoCambioEntrada} error={errores.latitud} />
                 </div>
                 <div className="flex-1">
-                  <Entrada texto="Longitud" name="longitud" value={longitud} type="text" onChange={manejoCambioEntrada} error={errores.longitud} />
+                  <Entrada texto="Longitud" name="longitud" value={longitud} type="number" onChange={manejoCambioEntrada} error={errores.longitud} />
                 </div>
               </div>
             </div>

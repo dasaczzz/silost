@@ -64,7 +64,18 @@ export const GraficaPesos = () => {
       <div className="bg-primary-gray flex flex-col gap-4 items-center justify-center py-10 px-5 rounded-2xl flex-1">
         <h3 className="text-2xl font-semibold text-primary-black">Gráfica de Pesos en el Tiempo</h3>
         <p className="text-gray-600">No hay datos de mediciones disponibles</p>
+         <select 
+          value={mesSeleccionado} 
+          onChange={(e) => setMesSeleccionado(e.target.value)}
+          className="px-4 py-2 rounded-md border border-gray-300 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-400"
+        >
+          <option value="">Todo el año</option>
+          {meses.map((mes, index) => (
+            <option key={index} value={index}>{mes}</option>
+          ))}
+        </select>
       </div>
+      
     );
   }
 
