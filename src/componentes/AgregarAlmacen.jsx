@@ -3,6 +3,7 @@ import { useForm } from "../hooks/useForm"
 import { Entrada } from "./genericos/Entrada"
 import { useFetch } from "../hooks/useFetch"
 import { AlmacenActual } from "../context/AlmacenActual"
+import { toast } from "sonner"
 
 export const AgregarAlmacen = ({cerrarModal}) => {
 
@@ -35,7 +36,9 @@ export const AgregarAlmacen = ({cerrarModal}) => {
         const almacenAgregado = await post(nuevoAlmacen);
         console.log(almacenAgregado);
 
-        setAlmacenActual(almacenAgregado[0]); 
+        setAlmacenActual(almacenAgregado[0]);
+        toast.success('Contenido guardado exitosamente')
+
         cerrarModal();
         manejoReinicio();
       } catch (err) {
