@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { AlmacenActual } from "../../context/AlmacenActual";
 import { useFetch } from "../../hooks/useFetch";
+import { Modal } from "../genericos/Modal";
+import { AgregarSilo } from "../AgregarSilo";
 
 export const ListaSilos = () => {
 
@@ -8,6 +10,10 @@ export const ListaSilos = () => {
   const [ silos, setSilos ] = useState(almacenActual?.silos || []);
   const { data: erroresSilos } = useFetch(`almacenes/${almacenActual?._id}/silos/errores`);
   const [siloExpandido, setSiloExpandido] = useState(null);
+  const [mostrarModal, setMostrarModal] = useState(false);
+
+  const abrirModal = () => setMostrarModal(true);
+  const cerrarModal = () => setMostrarModal(false);
   
   
   useEffect(() => { setSilos(almacenActual?.silos || []) }, [ almacenActual ])
@@ -32,13 +38,21 @@ export const ListaSilos = () => {
 
   if (!silos || silos.length === 0) {
     return (
-      <div className="bg-primary-gray flex flex-col gap-9  items-center justify-center py-10 px-5 rounded-2xl w-1/3">
-        <h3 className="text-2xl font-semibold text-primary-black">Silos</h3>
-        <p className="text-gray-600 text-center">No hay silos disponibles</p>
-        <button className="mt-5 rounded-md border border-primary-black bg-primary-white px-5 py-2.5 font-semibold text-primary-black shadow-sm transition hover:border-none hover:ring-2 hover:ring-primary-400 hover:ring-offset-2">
-          CREAR UN SILO
-        </button>
-      </div>
+      <>
+        <div className="bg-primary-gray flex flex-col gap-9  items-center justify-center py-10 px-5 rounded-2xl w-1/3">
+          <h3 className="text-2xl font-semibold text-primary-black">Silos</h3>
+          <p className="text-gray-600 text-center">No hay silos disponibles</p>
+          <button 
+            onClick={abrirModal}
+            className="mt-5 rounded-md border border-primary-black bg-primary-white px-5 py-2.5 font-semibold text-primary-black shadow-sm transition hover:border-none hover:ring-2 hover:ring-primary-400 hover:ring-offset-2"
+          >
+            CREAR UN SILO
+          </button>
+        </div>
+        <Modal seMuestra={mostrarModal} cerrarModal={cerrarModal} titulo="Crear Silo">
+          <AgregarSilo cerrarModal={cerrarModal} />
+        </Modal>
+      </>
     );
   }
 
@@ -118,9 +132,16 @@ export const ListaSilos = () => {
           );
         })}
       </ul>
-      <button className="mt-5 rounded-md border border-primary-black bg-primary-white px-5 py-2.5 font-semibold text-primary-black shadow-sm transition hover:border-none hover:ring-2 hover:ring-primary-400 hover:ring-offset-2">
-          CREAR UN SILO
-        </button>
+      <button 
+        onClick={abrirModal}
+        className="mt-5 rounded-md border border-primary-black bg-primary-white px-5 py-2.5 font-semibold text-primary-black shadow-sm transition hover:border-none hover:ring-2 hover:ring-primary-400 hover:ring-offset-2"
+      >
+        CREAR UN SILO
+      </button>
+      
+      <Modal seMuestra={mostrarModal} cerrarModal={cerrarModal} titulo="Crear Silo">
+        <AgregarSilo cerrarModal={cerrarModal} />
+      </Modal>
     </div>
   )
 }
