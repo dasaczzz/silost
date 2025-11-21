@@ -7,18 +7,18 @@ export const ListaSilos = () => {
   const { almacenActual } = useContext(AlmacenActual);
   const [ silos, setSilos ] = useState(almacenActual?.silos || []);
   const [ expandedSilo, setExpandedSilo ] = useState(null);
-  const { data: medicionesErroneas } = useFetch(`almacenes/${almacenActual?._id}/medicionesErroneas`);
+  const { data: medicionesErroneas } = useFetch(almacenActual ? `almacenes/${almacenActual._id}/medicionesErroneas` : '');
   
   useEffect(() => { setSilos(almacenActual?.silos || []) }, [ almacenActual ])
 
   // Helper function to get error data for a specific silo
   const getErrorDataForSilo = (idSilo) => {
-    if (!medicionesErroneas) return null;
+    if (!medicionesErroneas || !almacenActual) return null;
     return medicionesErroneas.find(item => item._id === idSilo);
   };
 
-  const toggleExpanded = (siloId) => {
-    setExpandedSilo(expandedSilo === siloId ? null : siloId);
+  const toggleExpanded = (idSilo) => {
+    setExpandedSilo(expandedSilo === idSilo ? null : idSilo);
   };
 
   if (!silos || silos.length === 0) {
@@ -39,7 +39,7 @@ export const ListaSilos = () => {
       <ul className="flex flex-col items-start gap-4 w-full">
         {silos.map((silo) => {
           const errorData = getErrorDataForSilo(silo.idSilo);
-          const isExpanded = expandedSilo === silo.id;
+          const isExpanded = expandedSilo === silo.idSilo;
           
           return (
             <li key={silo.id} className="flex flex-col w-full bg-primary-white rounded-lg shadow-md overflow-hidden">
@@ -62,7 +62,7 @@ export const ListaSilos = () => {
                         </span>
                         {errorData.errores > 0 && (
                           <button 
-                            onClick={() => toggleExpanded(silo.id)}
+                            onClick={() => toggleExpanded(silo.idSilo)}
                             className="text-gray-500 hover:text-gray-700 transition-transform"
                             style={{ transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
                           >
